@@ -6,7 +6,12 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("first.html", title="Главная страница", trains=get_data())
+    data = post('https://inf2086.ru/trains_timetable_api/timetable', data='340yk034k4f').text
+    if data == 'timetable_not_ready': data = open('last.txt', 'r', encoding='UTF-8').read()
+    else: print('req')
+    with open('last.txt', 'w', encoding='UTF-8') as file:
+        file.write(data)
+    return render_template("first.html", title="Главная страница", trains=get_data(data))
 
 
 def time(tm):
@@ -28,9 +33,7 @@ def normal(sp):
     return result
 
 
-def get_data():
-    #req = post('https://inf2086.ru/trains_timetable_api/timetable', data='340yk034k4f').text
-    req = open('2.txt', 'r', encoding='UTF-8').read()
+def get_data(req):
     data = [x.split() for x in req.split('\n')]
     if data[-1] == []: del data[-1]
     data = sorted(data, key=lambda x: time(x[3]))
