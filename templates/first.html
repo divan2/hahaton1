@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Таблица пезда {{ trains}}</title>
+ </head>
+ <body>
+ <caption>Таблица пезда</caption>
+
+  <table border="1">
+      <tr><td>id</td><td>пункт отправления</td><td>пункт назначения</td><td>время прибытия</td><td>время отправления</td><td>время стоянки</td>
+          {% for item in trains %}
+        <tr><td>{{item[0]}}</td><td>{{item[1]}}</td><td>{{item[2]}}</td><td>{{item[3]}}</td><td>{{item[4]}}</td><td>{{item[5]}}</td>
+    {% endfor %}
+  </table>
+ </body>
