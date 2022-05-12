@@ -33,8 +33,14 @@ def normal(sp):
     return result
 
 
+def stop(dt):
+    if dt == []: return []
+    stp = str(time(dt[-1]) - time(dt[-2])) + ' мин'
+    return dt + [stp]
+
+
 def get_data(req):
-    data = [x.split() for x in req.split('\n')]
+    data = [stop(x.split()[1:]) for x in req.split('\n')]
     if data[-1] == []: del data[-1]
     data = sorted(data, key=lambda x: time(x[3]))
     return normal(data)
